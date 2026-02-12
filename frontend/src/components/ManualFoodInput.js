@@ -24,7 +24,7 @@ const ManualFoodInput = () => {
 
     const fetchSuggestions = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/food-suggestions?query=${encodeURIComponent(foodName)}`);
+        const response = await fetch(`/food-suggestions?query=${encodeURIComponent(foodName)}`);
         const data = await response.json();
         setSuggestions(data.suggestions || []);
         setShowSuggestions(data.suggestions && data.suggestions.length > 0);
@@ -155,7 +155,7 @@ const ManualFoodInput = () => {
     setShowSuggestions(false);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/manual-nutrition', {
+      const response = await fetch('/manual-nutrition', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
