@@ -101,7 +101,8 @@ const FoodDetector = () => {
     setResult(null);
 
     try {
-      const response = await fetch(window.location.origin + "/predict", {
+      const response = await fetch("https://nutriscope.onrender.com/predict", {
+
         method: 'POST',
         body: formData,
       });

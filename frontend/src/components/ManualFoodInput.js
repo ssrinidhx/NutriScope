@@ -24,7 +24,7 @@ const ManualFoodInput = () => {
 
     const fetchSuggestions = async () => {
       try {
-        const response = await fetch(window.location.origin + `/food-suggestions?query=${encodeURIComponent(foodName)}`)
+        const response = await fetch(`https://nutriscope.onrender.com/food-suggestions?query=${encodeURIComponent(foodName)}`)
         const data = await response.json();
         setSuggestions(data.suggestions || []);
         setShowSuggestions(data.suggestions && data.suggestions.length > 0);
@@ -155,7 +155,8 @@ const ManualFoodInput = () => {
     setShowSuggestions(false);
 
     try {
-      const response = await fetch(window.location.origin + "/manual-nutrition", {
+      const response = await fetch("https://nutriscope.onrender.com/manual-nutrition", {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
