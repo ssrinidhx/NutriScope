@@ -36,7 +36,7 @@ const UploadImage = () => {
     setResult(null);
 
     try {
-      const response = await fetch("/predict", {
+      const response = await fetch(window.location.origin + "/predict", {
         method: "POST",
         body: formData,
       });
