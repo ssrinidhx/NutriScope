@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from inference_sdk import InferenceHTTPClient
 from ultralytics import YOLO
+from PIL import Image
 import os
 from flask_cors import CORS
 from collections import Counter
@@ -56,10 +57,12 @@ co = cohere.Client(COHERE_API_KEY) if COHERE_API_KEY else None
 
 try:
     yolo_model = YOLO(MODEL_PATH)
+    yolo_model.to("cpu")
     print("YOLO model loaded successfully")
 except Exception as e:
     print("Failed to load YOLO model:", e)
     yolo_model = None
+
 
 def normalize_name(name):
     return re.sub(r'\W+', '', name.lower())
@@ -150,7 +153,7 @@ def run_yolo_international(image_path):
         if yolo_model is None:
             return {"food": "Unknown", "confidence": 0, "type": "International", "error": "YOLO model not available"}
             
-        results = yolo_model(image_path, imgsz=640) 
+        results = yolo_model(image_path, imgsz=320)
         detections = []
         ignore_classes = ["juice", "fork", "plate", "glass", "cup", "knife", "spoon", "bowl"]
 
@@ -283,8 +286,11 @@ def predict():
             
         filename = file.filename
         save_path = DATA_DIR / filename
-        file.save(str(save_path))
-        
+        image = Image.open(file)
+        image = image.convert("RGB")
+        image.thumbnail((640, 640))
+        image.save(save_path)
+
         print(f"[INFO] Processing {filename} as {food_type} food")
 
         if food_type == "international":
