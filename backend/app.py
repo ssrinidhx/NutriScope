@@ -40,7 +40,7 @@ indian_workflows = [
 ]
 
 BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "models" / "yolov8l.pt"
+MODEL_PATH = BASE_DIR / "models" / "yolov8n.pt"
 DATA_DIR = BASE_DIR / "data"
 DATA_DIR.mkdir(exist_ok=True)
 
